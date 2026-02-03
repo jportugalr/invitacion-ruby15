@@ -22,7 +22,7 @@ export default function GuestMessagesList({ messages }: GuestMessagesListProps) 
                     <div key={msg.id} className="bg-white p-4 rounded-lg shadow-sm border border-gray-50">
                         <p className="text-gray-700 italic mb-3">"{msg.message_text}"</p>
                         <div className="text-right">
-                            <span className="text-sm font-semibold text-pink-600">- {msg.author_name}</span>
+                            <span className="text-sm font-semibold text-pink-600">- {msg.guest_name}</span>
                             <p className="text-xs text-gray-400">
                                 {new Date(msg.created_at).toLocaleDateString()}
                             </p>

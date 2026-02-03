@@ -85,14 +85,14 @@ export default function ScannerPage() {
                     <div className="bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl mb-6 relative">
                         <div className="aspect-square relative">
                             <Scanner
-                                onFailure={(err) => console.log(err)}
+                                onError={(err) => console.log(err)}
                                 onScan={(detected) => {
                                     if (detected && detected.length > 0) {
                                         handleScan(detected[0].rawValue);
                                     }
                                 }}
-                                styles={{
-                                    container: { width: '100%', height: '100%' }
+                                classNames={{
+                                    container: 'w-full h-full'
                                 }}
                             />
                             {/* Overlay UI */}
@@ -154,8 +154,8 @@ export default function ScannerPage() {
 
                     {!loading && invitation && (
                         <div className={`rounded-2xl p-8 border-4 shadow-2xl text-center ${invitation.rsvp_status === 'confirmed'
-                                ? 'bg-emerald-950/30 border-emerald-500 shadow-emerald-900/20'
-                                : 'bg-red-950/30 border-red-500 shadow-red-900/20'
+                            ? 'bg-emerald-950/30 border-emerald-500 shadow-emerald-900/20'
+                            : 'bg-red-950/30 border-red-500 shadow-red-900/20'
                             }`}>
 
                             {invitation.rsvp_status === 'confirmed' ? (
