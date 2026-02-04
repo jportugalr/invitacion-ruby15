@@ -1,5 +1,8 @@
 'use client';
 
+import { BACKGROUNDS, getBackgroundStyle } from '@/lib/assets';
+import ScrollReveal from './ScrollReveal';
+
 import React, { useState, useEffect } from 'react';
 import { Invitation } from '@/lib/types';
 import { ChevronDown, Heart } from 'lucide-react';
@@ -29,43 +32,58 @@ export default function Hero({ invitation }: HeroProps) {
         return () => clearInterval(timer);
     }, []);
 
+
     return (
         <>
             {/* --- HERO: EMERALD & ELEGANT --- */}
-            <header className="relative h-screen flex flex-col justify-center items-center text-center overflow-hidden bg-emerald-50">
+            <header className="relative h-screen flex flex-col justify-center items-center text-center overflow-hidden bg-emerald-50" style={getBackgroundStyle(BACKGROUNDS.hero.image)}>
+                {/* Overlay for Hero Image if present */}
+                {BACKGROUNDS.hero.image && (
+                    <div className="absolute inset-0 bg-black/30 z-0"></div>
+                )}
 
                 {/* Decorative Background */}
                 <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-emerald-200 rounded-full blur-[120px] opacity-60 animate-pulse"></div>
                 <div className="absolute bottom-[-10%] left-[-10%] w-[60%] h-[60%] bg-teal-100 rounded-full blur-[100px] opacity-70"></div>
 
                 <div className="relative z-10 px-4 animate-float">
-                    <div className="mb-4 inline-block bg-white px-4 py-1 rounded-full shadow-sm border border-emerald-100 transform -rotate-2">
-                        <p className="font-body text-slate-500 text-xs tracking-[0.3em] uppercase font-bold">Save the Date</p>
-                    </div>
+                    <ScrollReveal direction="down" distance={30}>
+                        <div className="mb-4 inline-block bg-white px-4 py-1 rounded-full shadow-sm border border-emerald-100 transform -rotate-2">
+                            <p className="font-body text-slate-500 text-xs tracking-[0.3em] uppercase font-bold">Save the Date</p>
+                        </div>
+                    </ScrollReveal>
 
-                    <h1 className="font-display text-7xl md:text-9xl text-emerald-600 mb-0 leading-[0.9] drop-shadow-sm">
-                        <span className="text-slate-800">Ruby</span><br />
-                        Zavaleta
-                    </h1>
+                    <ScrollReveal direction="up" delay={0.2}>
+                        <h1 className="font-display text-7xl md:text-9xl text-emerald-600 mb-0 leading-[0.9] drop-shadow-sm">
+                            <span className="text-slate-800">Ruby</span><br />
+                            Zavaleta
+                        </h1>
+                    </ScrollReveal>
 
-                    <p className="font-script text-4xl md:text-5xl text-teal-500 mt-4 rotate-2">Mis Quince Años</p>
+                    <ScrollReveal direction="up" delay={0.4}>
+                        <p className="font-script text-4xl md:text-5xl text-teal-500 mt-4 py-2 leading-relaxed rotate-2">Mis Quince Años</p>
+                    </ScrollReveal>
 
-                    {invitation && (
-                        <p className="mt-8 font-body text-slate-600 uppercase tracking-widest text-sm">
-                            Invitado: <span className="font-bold text-emerald-600">{invitation.first_name} {invitation.last_name}</span>
-                        </p>
-                    )}
+                    <ScrollReveal direction="up" delay={0.6}>
+                        {invitation && (
+                            <p className="mt-8 font-body text-slate-600 uppercase tracking-widest text-sm">
+                                Invitado: <span className="font-bold text-emerald-600">{invitation.first_name} {invitation.last_name}</span>
+                            </p>
+                        )}
+                    </ScrollReveal>
 
                     {/* Original Date Box */}
-                    <div className="mt-8 bg-white/60 backdrop-blur-sm border border-white p-4 rounded-2xl inline-flex flex-col items-center gap-2 shadow-sm">
-                        <div className="flex items-center gap-4 text-slate-700 font-bold font-body text-sm md:text-base tracking-widest uppercase">
-                            <span>21 Feb</span>
-                            <span className="text-emerald-500">●</span>
-                            <span>2026</span>
+                    <ScrollReveal direction="up" delay={0.8}>
+                        <div className="mt-8 bg-white/60 backdrop-blur-sm border border-white p-4 rounded-2xl inline-flex flex-col items-center gap-2 shadow-sm">
+                            <div className="flex items-center gap-4 text-slate-700 font-bold font-body text-sm md:text-base tracking-widest uppercase">
+                                <span>21 Feb</span>
+                                <span className="text-emerald-500">●</span>
+                                <span>2026</span>
+                            </div>
+                            <div className="w-full h-px bg-slate-200"></div>
+                            <span className="text-slate-500 text-xs font-bold tracking-widest">TRUJILLO, PERÚ</span>
                         </div>
-                        <div className="w-full h-px bg-slate-200"></div>
-                        <span className="text-slate-500 text-xs font-bold tracking-widest">TRUJILLO, PERÚ</span>
-                    </div>
+                    </ScrollReveal>
 
                     {/* Visual Calendar */}
                     <div className="mt-8 mb-8 relative z-10">

@@ -1,5 +1,8 @@
 'use client';
 
+import { BACKGROUNDS, getBackgroundStyle } from '@/lib/assets';
+import ScrollReveal from './ScrollReveal';
+
 import React, { useState } from 'react';
 import { Invitation } from '@/lib/types';
 import { submitRsvp } from '@/lib/rpc';
@@ -85,18 +88,29 @@ export default function RSVPForm({ invitation }: RSVPFormProps) {
     return (
         <>
             {/* --- CTA CONFIRMACIÓN --- */}
-            <section className="py-24 bg-slate-900 text-white text-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-slate-900 opacity-20"></div>
+            <section className="py-24 bg-slate-900 text-white text-center relative overflow-hidden" style={getBackgroundStyle(BACKGROUNDS.rsvp.ctaSection)}>
+                <div className={`absolute inset-0 bg-slate-900 ${BACKGROUNDS.rsvp.ctaSection ? 'opacity-70' : 'opacity-20'}`}></div>
                 <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-emerald-400 via-teal-500 to-green-500"></div>
 
-                <div className="relative z-10 px-4">
-                    <h2 className="font-script text-6xl mb-8 leading-tight">¿Estás listo para brillar?</h2>
-                    <button
-                        onClick={() => setShowModal(true)}
-                        className="bg-emerald-500 text-white font-bold py-5 px-12 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.5)] hover:shadow-[0_0_30px_rgba(16,185,129,0.8)] hover:scale-105 transition-all text-sm tracking-widest uppercase cursor-pointer"
-                    >
-                        {invitation.rsvp_status === 'pending' ? 'Confirmar Asistencia' : 'Ver Mi Pase'}
-                    </button>
+                <div className="relative z-10 px-6 max-w-2xl mx-auto">
+                    <ScrollReveal distance={20} duration={1}>
+                        <h2 className="font-script text-6xl md:text-8xl mb-8 py-2 leading-relaxed text-emerald-300">¿Estás listo?</h2>
+                    </ScrollReveal>
+
+                    <ScrollReveal direction="up" delay={0.4}>
+                        <p className="font-body text-xl mb-12 text-slate-300 italic">
+                            Sería un honor contar con tu presencia en esta noche que he soñado tanto.
+                        </p>
+                    </ScrollReveal>
+
+                    <ScrollReveal distance={30} delay={0.6}>
+                        <button
+                            onClick={() => setShowModal(true)}
+                            className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-title font-bold py-6 px-16 rounded-full text-sm tracking-widest uppercase hover:scale-110 transition-transform shadow-[0_0_30px_rgba(16,185,129,0.4)] cursor-pointer"
+                        >
+                            {invitation.rsvp_status === 'pending' ? 'Confirmar Asistencia' : 'Ver Mi Pase'}
+                        </button>
+                    </ScrollReveal>
                 </div>
             </section>
 
@@ -127,7 +141,7 @@ export default function RSVPForm({ invitation }: RSVPFormProps) {
                         {/* Cuerpo del Modal */}
                         <div className="p-6 md:p-8 bg-white relative">
                             {/* Texture Noise */}
-                            <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] pointer-events-none"></div>
+                            <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: `url('${BACKGROUNDS.rsvp.modalTexture}')` }}></div>
 
                             {rsvpStep === 1 ? (
                                 <form onSubmit={handleSubmit} className="relative z-10">

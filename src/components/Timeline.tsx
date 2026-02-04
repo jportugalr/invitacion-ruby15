@@ -2,6 +2,7 @@
 
 import React, { useRef } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import ScrollReveal from './ScrollReveal';
 
 export default function Timeline() {
     const timelineRef = useRef<HTMLDivElement>(null);
@@ -26,37 +27,39 @@ export default function Timeline() {
 
     return (
         <section className="py-20 bg-slate-50 overflow-hidden relative">
-            <div className="max-w-6xl mx-auto px-6 relative">
-                <div className="flex justify-between items-end mb-8">
-                    <h3 className="font-display text-4xl text-slate-800">15 Años de Luz</h3>
-                    <div className="flex gap-2">
-                        <button onClick={() => scrollTimeline('left')} className="p-2 rounded-full bg-white shadow hover:bg-emerald-100 transition-colors">
-                            <ArrowLeft size={20} />
-                        </button>
-                        <button onClick={() => scrollTimeline('right')} className="p-2 rounded-full bg-white shadow hover:bg-emerald-100 transition-colors">
-                            <ArrowRight size={20} />
-                        </button>
+            <ScrollReveal direction="up">
+                <div className="max-w-6xl mx-auto px-6 relative">
+                    <div className="flex justify-between items-end mb-8">
+                        <h3 className="font-display text-4xl text-slate-800">15 Años de Luz</h3>
+                        <div className="flex gap-2">
+                            <button onClick={() => scrollTimeline('left')} className="p-2 rounded-full bg-white shadow hover:bg-emerald-100 transition-colors">
+                                <ArrowLeft size={20} />
+                            </button>
+                            <button onClick={() => scrollTimeline('right')} className="p-2 rounded-full bg-white shadow hover:bg-emerald-100 transition-colors">
+                                <ArrowRight size={20} />
+                            </button>
+                        </div>
+                    </div>
+
+                    <div
+                        ref={timelineRef}
+                        className="flex overflow-x-auto gap-6 pb-8 hide-scrollbar snap-x snap-mandatory scroll-smooth"
+                    >
+                        {timelineEvents.map((event, idx) => (
+                            <div key={idx} className="snap-center shrink-0 w-72 relative group">
+                                <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform transition-transform duration-300 group-hover:-translate-y-2">
+                                    <img src={event.img} alt={event.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                                    <div className="absolute bottom-4 left-4 text-white">
+                                        <span className="font-display text-5xl text-emerald-300 opacity-90">{event.year}</span>
+                                    </div>
+                                </div>
+                                <p className="mt-4 text-center font-bold text-slate-700 font-body uppercase tracking-wider text-sm">{event.title}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
-
-                <div
-                    ref={timelineRef}
-                    className="flex overflow-x-auto gap-6 pb-8 hide-scrollbar snap-x snap-mandatory scroll-smooth"
-                >
-                    {timelineEvents.map((event, idx) => (
-                        <div key={idx} className="snap-center shrink-0 w-72 relative group">
-                            <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-lg border-4 border-white transform transition-transform duration-300 group-hover:-translate-y-2">
-                                <img src={event.img} alt={event.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-                                <div className="absolute bottom-4 left-4 text-white">
-                                    <span className="font-display text-5xl text-emerald-300 opacity-90">{event.year}</span>
-                                </div>
-                            </div>
-                            <p className="mt-4 text-center font-bold text-slate-700 font-body uppercase tracking-wider text-sm">{event.title}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
+            </ScrollReveal>
         </section>
     );
 }

@@ -1,5 +1,7 @@
 'use client';
 
+import { BACKGROUNDS } from '@/lib/assets';
+
 import React, { useState } from 'react';
 import { Crown } from 'lucide-react';
 
@@ -24,7 +26,7 @@ export default function Envelope({ guestName = "Familia y Amigos", onOpen }: Env
 
     return (
         <div className={`fixed inset-0 z-[100] bg-emerald-950 flex flex-col items-center justify-center envelope-transition ${isOpen ? 'slide-up' : ''}`}>
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `url('${BACKGROUNDS.envelope.texture}')` }}></div>
             <div className="absolute top-0 w-full h-1/2 bg-emerald-900 rounded-b-[100%] shadow-2xl origin-top transition-transform"></div>
 
             <div className="relative z-10 text-center p-6 md:p-8 max-w-sm w-full">
