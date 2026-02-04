@@ -42,7 +42,7 @@ export default async function InvitationPage({ params }: Props) {
 
                 <Hero invitation={invitation} />
 
-                <Timeline />
+                {process.env.NEXT_PUBLIC_SHOW_PHOTOS === 'true' && <Timeline />}
 
                 <EventInfo />
 

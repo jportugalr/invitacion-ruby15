@@ -90,7 +90,7 @@ export default function RSVPForm({ invitation }: RSVPFormProps) {
                 <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-emerald-400 via-teal-500 to-green-500"></div>
 
                 <div className="relative z-10 px-4">
-                    <h2 className="font-display text-5xl mb-8">¿Estás listo para brillar?</h2>
+                    <h2 className="font-script text-6xl mb-8 leading-tight">¿Estás listo para brillar?</h2>
                     <button
                         onClick={() => setShowModal(true)}
                         className="bg-emerald-500 text-white font-bold py-5 px-12 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.5)] hover:shadow-[0_0_30px_rgba(16,185,129,0.8)] hover:scale-105 transition-all text-sm tracking-widest uppercase cursor-pointer"

@@ -50,6 +50,9 @@ export default function EventInfo() {
                                     <button onClick={() => window.open('https://waze.com/ul/h6nxcd3f7c')} className="px-8 py-4 bg-slate-800 text-white rounded-full font-bold text-xs hover:bg-slate-700 transition-transform hover:scale-105 shadow-lg flex items-center justify-center gap-2 cursor-pointer">
                                         <Navigation size={14} /> IR CON WAZE
                                     </button>
+                                    <button onClick={() => window.open('https://maps.app.goo.gl/search?api=1&query=Hacienda+La+Fortaleza+Campiña+de+Moche')} className="px-8 py-4 bg-white text-slate-800 border border-slate-200 rounded-full font-bold text-xs hover:bg-slate-50 transition-transform hover:scale-105 shadow-lg flex items-center justify-center gap-2 cursor-pointer">
+                                        <span className="text-green-600">📍</span> GOOGLE MAPS
+                                    </button>
                                 </div>
                             </div>
 

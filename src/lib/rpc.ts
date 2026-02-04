@@ -11,7 +11,7 @@ export async function getInvitation(inviteToken: string): Promise<RpcResponse<In
             .single();
 
         if (error) {
-            console.error('Error fetching invitation:', error);
+            console.error('Error fetching invitation:', JSON.stringify(error, null, 2));
             return { data: null, error: error.message };
         }
 

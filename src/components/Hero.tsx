@@ -43,7 +43,7 @@ export default function Hero({ invitation }: HeroProps) {
                         <p className="font-body text-slate-500 text-xs tracking-[0.3em] uppercase font-bold">Save the Date</p>
                     </div>
 
-                    <h1 className="font-display text-6xl md:text-9xl text-emerald-600 mb-0 leading-[0.9] drop-shadow-sm">
+                    <h1 className="font-display text-7xl md:text-9xl text-emerald-600 mb-0 leading-[0.9] drop-shadow-sm">
                         <span className="text-slate-800">Ruby</span><br />
                         Zavaleta
                     </h1>

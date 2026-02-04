@@ -16,9 +16,9 @@ export default function GuestMessageForm({ invitation, initialMessages }: GuestM
     const [loading, setLoading] = useState(false);
 
     // Check if user has already submitted based on invitation_id
-    const [hasSubmitted, setHasSubmitted] = useState(() => {
-        return initialMessages.some(msg => msg.invitation_id === invitation.id);
-    });
+    // We rely on backend validation to prevent duplicates.
+    // Proactive check was causing false positives, so we default to false (allow submission).
+    const [hasSubmitted, setHasSubmitted] = useState(false);
 
     const handleWishSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
