@@ -24,7 +24,7 @@ export default function EventInfo() {
                     <Heart className="w-12 h-12 text-teal-400 fill-teal-50 mx-auto mb-6 animate-pulse" />
                     <Sparkles className="absolute -top-2 -right-4 w-6 h-6 text-emerald-400 animate-spin-slow" />
                 </div>
-                <h3 className="font-body font-bold text-3xl mb-6 text-slate-800">¡Celebremos la vida!</h3>
+                <h3 className="font-script text-5xl md:text-6xl text-emerald-800 mb-6 drop-shadow-sm">¡Celebremos la vida!</h3>
                 <p className="font-body text-lg text-slate-600 leading-loose">
                     "Como la esmeralda que simboliza esperanza y renovación, inicio esta nueva etapa. Quiero compartir este brillo contigo, porque cada momento feliz es mejor cuando estamos juntos."
                 </p>
@@ -41,7 +41,7 @@ export default function EventInfo() {
 
                             <div className="text-center md:text-left">
                                 <span className="bg-white px-4 py-1 rounded-full text-xs font-bold text-teal-600 uppercase tracking-wider mb-4 inline-block shadow-sm">Recepción & Fiesta</span>
-                                <h3 className="font-display text-5xl md:text-6xl text-slate-800 mb-6 leading-tight">Hacienda <br /> <span className="text-emerald-500">La Fortaleza</span></h3>
+                                <h3 className="font-script text-6xl md:text-7xl text-emerald-900 mb-6 leading-tight">Hacienda <br /> <span className="text-emerald-600">La Fortaleza</span></h3>
                                 <p className="font-body text-slate-600 mb-8 max-w-sm mx-auto md:mx-0">
                                     Campiña de Moche <br /> Un lugar mágico para una noche mágica.
                                 </p>
@@ -55,12 +55,12 @@ export default function EventInfo() {
 
                             {/* Itinerario */}
                             <div className="bg-white/80 backdrop-blur p-8 rounded-3xl shadow-sm border border-white">
-                                <h4 className="font-display text-2xl text-slate-800 mb-8 text-center">Itinerario de la Noche</h4>
+                                <h4 className="font-script text-4xl text-emerald-800 mb-8 text-center">Itinerario Real</h4>
                                 <div className="space-y-8 relative before:absolute before:left-8 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
                                     {[
-                                        { time: '19:00', label: 'Bienvenida', icon: '🍸', color: 'bg-emerald-100' },
-                                        { time: '20:30', label: 'Vals & Cena', icon: '🍽️', color: 'bg-teal-100' },
-                                        { time: '22:00', label: '¡Hora Loca!', icon: '💃', color: 'bg-green-100' },
+                                        { time: '21:00', label: 'Bienvenida', icon: '🍸', color: 'bg-emerald-100' },
+                                        { time: '22:30', label: 'Vals & Cena', icon: '🍽️', color: 'bg-teal-100' },
+                                        { time: '23:30', label: '¡Hora Loca!', icon: '💃', color: 'bg-green-100' },
                                         { time: '02:00', label: 'Fin de Fiesta', icon: '🌙', color: 'bg-slate-200' }
                                     ].map((item, i) => (
                                         <div key={i} className="flex items-center gap-6 relative">
@@ -83,7 +83,7 @@ export default function EventInfo() {
 
             {/* --- DRESS CODE --- */}
             <section className="py-20 text-center bg-white">
-                <h3 className="font-display text-4xl mb-12 text-slate-800">Dress Code</h3>
+                <h3 className="font-script text-6xl text-emerald-900 mb-12">Protocolo Real</h3>
 
                 <div className="flex flex-wrap justify-center gap-8 md:gap-16">
                     {/* Ellas */}
@@ -122,7 +122,7 @@ export default function EventInfo() {
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-500"><rect width="20" height="14" x="2" y="5" rx="2" /><path d="m22 5-10 9L2 5" /></svg>
                         </div>
 
-                        <h3 className="font-display text-3xl text-slate-800 mb-6">Lluvia de Sobres</h3>
+                        <h3 className="font-script text-5xl text-emerald-900 mb-6">Lluvia de Sobres</h3>
                         <p className="font-body text-slate-600 mb-8 leading-relaxed max-w-xl mx-auto">
                             "Tu presencia en este día tan especial es el mejor regalo, pero si deseas obsequiarme un detalle, una contribución en efectivo será recibida con mucho cariño y gratitud."
                         </p>

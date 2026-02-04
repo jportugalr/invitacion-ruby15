@@ -13,7 +13,7 @@ export default function Hero({ invitation }: HeroProps) {
 
     // Event Date: Feb 22, 2026 19:00:00
     useEffect(() => {
-        const eventDate = new Date('2026-02-22T19:00:00');
+        const eventDate = new Date('2026-02-21T19:00:00');
         const timer = setInterval(() => {
             const now = new Date();
             const diff = eventDate.getTime() - now.getTime();
@@ -43,7 +43,7 @@ export default function Hero({ invitation }: HeroProps) {
                         <p className="font-body text-slate-500 text-xs tracking-[0.3em] uppercase font-bold">Save the Date</p>
                     </div>
 
-                    <h1 className="font-display text-7xl md:text-9xl text-emerald-600 mb-0 leading-[0.9] drop-shadow-sm">
+                    <h1 className="font-display text-6xl md:text-9xl text-emerald-600 mb-0 leading-[0.9] drop-shadow-sm">
                         <span className="text-slate-800">Ruby</span><br />
                         Zavaleta
                     </h1>
@@ -59,7 +59,7 @@ export default function Hero({ invitation }: HeroProps) {
                     {/* Original Date Box */}
                     <div className="mt-8 bg-white/60 backdrop-blur-sm border border-white p-4 rounded-2xl inline-flex flex-col items-center gap-2 shadow-sm">
                         <div className="flex items-center gap-4 text-slate-700 font-bold font-body text-sm md:text-base tracking-widest uppercase">
-                            <span>22 Feb</span>
+                            <span>21 Feb</span>
                             <span className="text-emerald-500">●</span>
                             <span>2026</span>
                         </div>
@@ -83,7 +83,7 @@ export default function Hero({ invitation }: HeroProps) {
                             <div className="grid grid-cols-7 gap-2">
                                 {Array.from({ length: 28 }, (_, i) => i + 1).map(day => (
                                     <div key={day} className="flex items-center justify-center relative h-8">
-                                        {day === 22 ? (
+                                        {day === 21 ? (
                                             <div className="relative flex items-center justify-center w-8 h-8">
                                                 <Heart className="absolute w-8 h-8 text-emerald-300 fill-emerald-200 animate-pulse-heart opacity-60" />
                                                 <span className="relative z-10 font-serif font-bold text-emerald-900">{day}</span>

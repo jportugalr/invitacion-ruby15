@@ -125,7 +125,7 @@ export default function RSVPForm({ invitation }: RSVPFormProps) {
                         </div>
 
                         {/* Cuerpo del Modal */}
-                        <div className="p-8 bg-white relative">
+                        <div className="p-6 md:p-8 bg-white relative">
                             {/* Texture Noise */}
                             <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] pointer-events-none"></div>
 

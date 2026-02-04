@@ -2,6 +2,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import { getInvitation, getGuestMessages } from '@/lib/rpc';
 
+import InvitationContainer from '@/components/InvitationContainer';
 import MusicPlayer from '@/components/MusicPlayer';
 import Hero from '@/components/Hero';
 import Timeline from '@/components/Timeline';
@@ -36,24 +37,26 @@ export default async function InvitationPage({ params }: Props) {
 
     return (
         <main className="min-h-screen">
-            <MusicPlayer />
+            <InvitationContainer invitation={invitation}>
+                <MusicPlayer />
 
-            <Hero invitation={invitation} />
+                <Hero invitation={invitation} />
 
-            <Timeline />
+                <Timeline />
 
-            <EventInfo />
+                <EventInfo />
 
-            <DJSection invitation={invitation} />
+                <DJSection invitation={invitation} />
 
-            <GuestMessageForm invitation={invitation} initialMessages={messages} />
+                <GuestMessageForm invitation={invitation} initialMessages={messages} />
 
-            <RSVPForm invitation={invitation} />
+                <RSVPForm invitation={invitation} />
 
-            <footer className="bg-slate-950 py-8 text-center">
-                <p className="font-script text-3xl text-slate-600 mb-2">Ruby Zavaleta</p>
-                <p className="text-[10px] text-slate-700 uppercase tracking-widest">Trujillo 2026 • Designed with Love</p>
-            </footer>
+                <footer className="bg-slate-950 py-8 text-center">
+                    <p className="font-script text-3xl text-slate-600 mb-2">Ruby Zavaleta</p>
+                    <p className="text-[10px] text-slate-700 uppercase tracking-widest">Trujillo 2026 • Designed with Love</p>
+                </footer>
+            </InvitationContainer>
         </main>
     );
 }

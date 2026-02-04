@@ -1,16 +1,22 @@
 import type { Metadata } from "next";
-import { Pinyon_Script, Didact_Gothic } from "next/font/google";
+import { Cinzel, Monsieur_La_Doulaise, Quicksand } from "next/font/google";
 import "./globals.css";
 
-const pinyon = Pinyon_Script({
-  weight: "400",
-  variable: "--font-pinyon",
+const cinzel = Cinzel({
+  weight: ["400", "500", "700"],
+  variable: "--font-title",
   subsets: ["latin"],
 });
 
-const didact = Didact_Gothic({
+const monsieur = Monsieur_La_Doulaise({
   weight: "400",
-  variable: "--font-didact",
+  variable: "--font-script",
+  subsets: ["latin"],
+});
+
+const quicksand = Quicksand({
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-body",
   subsets: ["latin"],
 });
 
@@ -27,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body
-        className={`${pinyon.variable} ${didact.variable} antialiased bg-white text-slate-800 font-body overflow-x-hidden selection:bg-emerald-200 selection:text-emerald-900`}
+        className={`${cinzel.variable} ${monsieur.variable} ${quicksand.variable} antialiased bg-white text-slate-800 font-body overflow-x-hidden selection:bg-emerald-200 selection:text-emerald-900`}
       >
         {children}
       </body>

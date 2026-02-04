@@ -94,7 +94,7 @@ export default function DJSection({ invitation }: DJSectionProps) {
                             <Music size={14} className="text-emerald-400" />
                             <span className="text-xs font-bold text-emerald-300 uppercase tracking-widest">Party Mode ON</span>
                         </div>
-                        <h3 className="font-display text-4xl mb-4 text-white">DJ Colaborativo</h3>
+                        <h3 className="font-script text-5xl mb-4 text-emerald-100 drop-shadow-lg">DJ Real</h3>
                         <p className="text-slate-400 mb-8 font-light">
                             ¡La música la pones tú! Agrega tus canciones favoritas a la Playlist oficial.
                         </p>

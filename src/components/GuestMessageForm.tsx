@@ -65,7 +65,7 @@ export default function GuestMessageForm({ invitation, initialMessages }: GuestM
         <section className="py-20 px-4 bg-gradient-to-b from-white to-emerald-50" id="wishes-container">
             <div className="max-w-2xl mx-auto text-center">
                 <Star className="w-8 h-8 text-emerald-400 fill-emerald-400 mx-auto mb-4 animate-spin-slow" />
-                <h3 className="font-display text-3xl text-slate-800 mb-8">Déjale un deseo a Ruby</h3>
+                <h3 className="font-script text-5xl text-emerald-900 mb-8">Un Deseo Real</h3>
 
                 {!hasSubmitted ? (
                     <form onSubmit={handleWishSubmit} className="relative max-w-md mx-auto mb-10">
