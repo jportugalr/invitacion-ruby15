@@ -148,7 +148,7 @@ export default function RSVPForm({ invitation }: RSVPFormProps) {
             // 8. Venue & Address
             ctx.fillStyle = "#334155";
             ctx.font = "bold 20px sans-serif";
-            ctx.fillText("Hacienda La Fortaleza", width / 2, 655);
+            ctx.fillText("Restaurante La Fortaleza", width / 2, 655);
             ctx.font = "14px sans-serif";
             ctx.fillText("Carretera Campiña de Moche 13600, Moche", width / 2, 680);
 

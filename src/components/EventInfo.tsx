@@ -47,7 +47,7 @@ export default function EventInfo() {
 
                                 <div className="text-center md:text-left">
                                     <span className="bg-white px-4 py-1 rounded-full text-xs font-bold text-teal-600 uppercase tracking-wider mb-4 inline-block shadow-sm">Recepción & Fiesta</span>
-                                    <h3 className="font-script text-6xl md:text-7xl text-emerald-900 mb-6 py-2 leading-[1.1]">Hacienda <br /> <span className="text-emerald-600">La Fortaleza</span></h3>
+                                    <h3 className="font-script text-6xl md:text-7xl text-emerald-900 mb-6 py-2 leading-[1.1]">Restaurante <br /> <span className="text-emerald-600">La Fortaleza</span></h3>
                                     <p className="font-body text-slate-600 mb-8 max-w-sm mx-auto md:mx-0">
                                         Campiña de Moche <br /> Un lugar mágico para una noche mágica.
                                     </p>
