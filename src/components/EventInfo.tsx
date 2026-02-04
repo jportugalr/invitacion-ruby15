@@ -56,7 +56,7 @@ export default function EventInfo() {
                                         <button onClick={() => window.open('https://waze.com/ul/h6nxcd3f7c')} className="px-8 py-4 bg-slate-800 text-white rounded-full font-bold text-xs hover:bg-slate-700 transition-transform hover:scale-105 shadow-lg flex items-center justify-center gap-2 cursor-pointer">
                                             <Navigation size={14} /> IR CON WAZE
                                         </button>
-                                        <button onClick={() => window.open('https://maps.app.goo.gl/search?api=1&query=Hacienda+La+Fortaleza+Campiña+de+Moche')} className="px-8 py-4 bg-white text-slate-800 border border-slate-200 rounded-full font-bold text-xs hover:bg-slate-50 transition-transform hover:scale-105 shadow-lg flex items-center justify-center gap-2 cursor-pointer">
+                                        <button onClick={() => window.open('https://maps.app.goo.gl/BeWj6Jk2QZbYjkCp9')} className="px-8 py-4 bg-white text-slate-800 border border-slate-200 rounded-full font-bold text-xs hover:bg-slate-50 transition-transform hover:scale-105 shadow-lg flex items-center justify-center gap-2 cursor-pointer">
                                             <span className="text-green-600">📍</span> GOOGLE MAPS
                                         </button>
                                     </div>
@@ -70,7 +70,7 @@ export default function EventInfo() {
                                             { time: '21:00', label: 'Bienvenida', icon: '🍸', color: 'bg-emerald-100' },
                                             { time: '22:30', label: 'Vals & Cena', icon: '🍽️', color: 'bg-teal-100' },
                                             { time: '23:30', label: '¡Hora Loca!', icon: '💃', color: 'bg-green-100' },
-                                            { time: '02:00', label: 'Fin de Fiesta', icon: '🌙', color: 'bg-slate-200' }
+                                            // { time: '02:00', label: 'Fin de Fiesta', icon: '🌙', color: 'bg-slate-200' }
                                         ].map((item, i) => (
                                             <div key={i} className="flex items-center gap-6 relative">
                                                 <div className={`w-16 h-16 ${item.color} rounded-2xl flex items-center justify-center text-3xl shadow-sm z-10 transform hover:scale-105 transition-transform duration-300`}>

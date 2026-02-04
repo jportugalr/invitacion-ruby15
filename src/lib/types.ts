@@ -32,6 +32,19 @@ export interface SongRequest {
     i_voted: boolean;
 }
 
+export interface AdminInvitation {
+    guest_id: string;
+    first_name: string;
+    last_name: string;
+    invite_token: string;
+    plus_one_allowed: boolean;
+    attendees_count: number;
+    rsvp_status: InvitationStatus;
+    phone_e164: string | null;
+    last_sent_at: string | null;
+    last_sent_phone: string | null;
+}
+
 export interface RpcResponse<T> {
     data: T | null;
     error: string | null;

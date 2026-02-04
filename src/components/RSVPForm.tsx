@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { Invitation } from '@/lib/types';
 import { submitRsvp } from '@/lib/rpc';
 import { QRCodeSVG } from 'qrcode.react';
-import { X, CheckCircle } from 'lucide-react';
+import { X, CheckCircle, Download } from 'lucide-react';
 
 interface RSVPFormProps {
     invitation: Invitation;
@@ -83,6 +83,92 @@ export default function RSVPForm({ invitation }: RSVPFormProps) {
             confetto.style.animationDelay = Math.random() * 2 + 's';
             container.appendChild(confetto);
         }
+    };
+
+    const downloadQR = () => {
+        const svg = document.getElementById('qr-code-svg');
+        if (!svg) return;
+
+        const svgData = new XMLSerializer().serializeToString(svg);
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        const img = new Image();
+
+        // Pass resolution (Digital Ticket Aspect Ratio)
+        const width = 450;
+        const height = 750;
+        canvas.width = width;
+        canvas.height = height;
+
+        img.onload = () => {
+            if (!ctx) return;
+
+            // 1. Background (Elegant Emerald Gradient feel)
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, width, height);
+
+            // 2. Header Box
+            ctx.fillStyle = "#059669"; // Emerald 600
+            ctx.fillRect(0, 0, width, 120);
+
+            // 3. Header Text
+            ctx.fillStyle = "#ffffff";
+            ctx.textAlign = "center";
+            ctx.font = "bold 24px serif";
+            ctx.fillText("MIS 15 AÑOS", width / 2, 50);
+            ctx.font = "bold 42px 'Great Vibes', cursive, serif"; // Fallback to serif
+            ctx.fillText("Ruby Zavaleta", width / 2, 95);
+
+            // 4. Guest Name Label
+            ctx.fillStyle = "#64748b"; // Slate 500
+            ctx.font = "bold 14px sans-serif";
+            ctx.fillText("PASE PERSONAL PARA:", width / 2, 160);
+
+            // 5. Guest Name
+            ctx.fillStyle = "#0f172a"; // Slate 900
+            ctx.font = "bold 28px sans-serif";
+            ctx.fillText(`${invitation.first_name} ${invitation.last_name}`, width / 2, 200);
+
+            // 6. QR Code Section (Centered)
+            const qrSize = 320;
+            const qrX = (width - qrSize) / 2;
+            const qrY = 240;
+
+            // Subtle border for QR
+            ctx.strokeStyle = "#e2e8f0";
+            ctx.strokeRect(qrX - 10, qrY - 10, qrSize + 20, qrSize + 20);
+
+            ctx.drawImage(img, qrX, qrY, qrSize, qrSize);
+
+            // 7. Event Details Header
+            ctx.fillStyle = "#059669";
+            ctx.font = "bold 18px sans-serif";
+            ctx.fillText("DETALLES DEL EVENTO", width / 2, 620);
+
+            // 8. Venue & Address
+            ctx.fillStyle = "#334155";
+            ctx.font = "bold 20px sans-serif";
+            ctx.fillText("Hacienda La Fortaleza", width / 2, 655);
+            ctx.font = "14px sans-serif";
+            ctx.fillText("Carretera Campiña de Moche 13600, Moche", width / 2, 680);
+
+            // 9. Time
+            ctx.fillStyle = "#059669";
+            ctx.font = "bold 16px sans-serif";
+            ctx.fillText("Sábado 21 Feb - 9:00 PM (Bienvenida)", width / 2, 715);
+
+            // 10. Footer decoration
+            ctx.fillStyle = "#059669";
+            ctx.fillRect(0, height - 10, width, 10);
+
+            const pngFile = canvas.toDataURL("image/png");
+            const downloadLink = document.createElement("a");
+            downloadLink.download = `Pase_RubyXV_${invitation.first_name}.png`;
+            downloadLink.href = pngFile;
+            downloadLink.click();
+        };
+
+        img.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData)));
     };
 
     return (
@@ -286,22 +372,28 @@ export default function RSVPForm({ invitation }: RSVPFormProps) {
                                     </h4>
                                     <p className="text-slate-500 text-sm mb-8 leading-relaxed max-w-xs mx-auto">
                                         {status === 'confirmed'
-                                            ? <>Todo listo <strong>{invitation.first_name}</strong>. Nos vemos el 22 de Febrero.</>
+                                            ? <>Todo listo <strong>{invitation.first_name}</strong>. Nos vemos el 21 de Febrero.</>
                                             : <>Entendemos tu situación. Gracias por informarnos.</>
                                         }
                                     </p>
 
                                     {status === 'confirmed' && (
                                         <div className="bg-white p-4 rounded-xl shadow-inner border border-slate-200 mb-8 flex flex-col items-center">
-                                            <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-4">Tu Código de Acceso QR</p>
-                                            <div className="bg-white p-2 rounded-lg border-2 border-slate-100">
+                                            <div className="bg-white p-2 rounded-lg border-2 border-slate-100 mb-4">
                                                 <QRCodeSVG
+                                                    id="qr-code-svg"
                                                     value={invitation.invite_token}
                                                     size={160}
                                                     level="H"
                                                     fgColor="#059669"
                                                 />
                                             </div>
+                                            <button
+                                                onClick={downloadQR}
+                                                className="flex items-center gap-2 text-emerald-600 font-bold text-xs bg-emerald-50 px-4 py-2 rounded-full hover:bg-emerald-100 transition-colors cursor-pointer"
+                                            >
+                                                <Download size={14} /> DESCARGAR PASE (PNG)
+                                            </button>
                                             <p className="mt-4 font-mono text-xs text-slate-400 tracking-widest">{invitation.invite_token.slice(0, 8).toUpperCase()}</p>
                                         </div>
                                     )}
