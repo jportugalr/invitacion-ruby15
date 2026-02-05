@@ -36,7 +36,7 @@ export default function Hero({ invitation }: HeroProps) {
     return (
         <>
             {/* --- HERO: EMERALD & ELEGANT --- */}
-            <header className="relative h-screen flex flex-col justify-center items-center text-center overflow-hidden bg-emerald-50" style={getBackgroundStyle(BACKGROUNDS.hero.image)}>
+            <header className="relative min-h-screen flex flex-col justify-center items-center text-center overflow-hidden bg-emerald-50 pt-16 md:pt-20 pb-20" style={getBackgroundStyle(BACKGROUNDS.hero.image)}>
                 {/* Overlay for Hero Image if present */}
                 {BACKGROUNDS.hero.image && (
                     <div className="absolute inset-0 bg-black/30 z-0"></div>

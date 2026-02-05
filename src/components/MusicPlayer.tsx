@@ -19,7 +19,7 @@ export default function MusicPlayer() {
     };
 
     return (
-        <div className="fixed top-6 right-6 z-50">
+        <div className="fixed top-10 right-6 z-50">
             <button onClick={toggleMusic} className="bg-white/90 backdrop-blur shadow-xl p-3 rounded-full hover:scale-110 transition-transform border-2 border-emerald-400 group cursor-pointer">
                 {isMusicPlaying ? (
                     <div className="flex gap-1 h-3 items-end">

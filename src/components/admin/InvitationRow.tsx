@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { AdminInvitation } from '@/lib/types';
 import { adminUpdateGuestPhone, adminMarkInvitationSent } from '@/lib/adminRpc';
-import { MessageSquare, Check, Save, Loader2, AlertCircle, Phone, ExternalLink } from 'lucide-react';
+import { MessageSquare, Check, Save, Loader2, AlertCircle, Phone, ExternalLink, Copy } from 'lucide-react';
 
 interface InvitationRowProps {
     invitation: AdminInvitation;
@@ -73,6 +73,20 @@ export default function InvitationRow({ invitation, messageTemplate, onRefresh }
             onRefresh();
         }
         setLoading(false);
+    };
+
+    const copyToClipboard = () => {
+        const baseUrl = window.location.origin;
+        const inviteUrl = `${baseUrl}/i/${invitation.invite_token}`;
+        const firstName = invitation.first_name.split(' ')[0];
+        const finalMessage = messageTemplate
+            .replace('{NOMBRE}', firstName)
+            .replace('{URL}', inviteUrl);
+
+        navigator.clipboard.writeText(finalMessage).then(() => {
+            // Optional: Show a temporary success state
+            alert('Mensaje copiado al portapapeles');
+        });
     };
 
     const openWhatsApp = () => {
@@ -149,7 +163,7 @@ export default function InvitationRow({ invitation, messageTemplate, onRefresh }
                         </span>
                         <button
                             onClick={() => setIsEditing(true)}
-                            className="text-emerald-500 p-1.5 hover:bg-emerald-500/10 rounded-lg transition-all opacity-0 group-hover:opacity-100"
+                            className="text-emerald-500 p-1.5 hover:bg-emerald-500/10 rounded-lg transition-all"
                         >
                             <Phone size={14} />
                         </button>
@@ -185,6 +199,15 @@ export default function InvitationRow({ invitation, messageTemplate, onRefresh }
                     >
                         <MessageSquare size={14} />
                         <span className="hidden sm:inline">WhatsApp</span>
+                    </button>
+
+                    <button
+                        onClick={copyToClipboard}
+                        className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 text-slate-300 rounded-lg text-xs hover:bg-slate-700 transition-all cursor-pointer"
+                        title="Copiar Invitación"
+                    >
+                        <Copy size={14} />
+                        <span className="hidden sm:inline">Copiar</span>
                     </button>
 
                     <button
