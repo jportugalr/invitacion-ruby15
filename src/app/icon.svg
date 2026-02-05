@@ -1,0 +1,18 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo circular suave -->
+  <circle cx="16" cy="16" r="15" fill="#064E3B" />
+  
+  <!-- Corona Estilo Disney -->
+  <path d="M16 6L20 12L27 10L24 18H8L5 10L12 12L16 6Z" fill="#F59E0B" />
+  
+  <!-- Inicial 'R' caligráfica -->
+  <text x="16" y="24" text-anchor="middle" font-family="serif" font-size="12" font-weight="bold" fill="white">R</text>
+  
+  <!-- Destellos mágicos -->
+  <circle cx="27" cy="8" r="1.5" fill="#FCD34D">
+    <animate attributeName="opacity" values="1;0.2;1" dur="2s" repeatCount="indefinite" />
+  </circle>
+  <circle cx="5" cy="8" r="1" fill="#FCD34D">
+    <animate attributeName="opacity" values="0.2;1;0.2" dur="1.5s" repeatCount="indefinite" />
+  </circle>
+</svg>

@@ -23,6 +23,9 @@ const quicksand = Quicksand({
 export const metadata: Metadata = {
   title: "Invitación Ruby - Mis 15 Años",
   description: "Acompáñame a celebrar mis 15 años.",
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({

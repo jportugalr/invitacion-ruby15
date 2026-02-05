@@ -31,7 +31,7 @@ export default function MusicPlayer() {
                     <Play size={18} className="text-emerald-500 ml-0.5 fill-current" />
                 )}
             </button>
-            <audio ref={audioRef} loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" />
+            <audio ref={audioRef} loop src="/audio/music.mp3" />
         </div>
     );
 };
