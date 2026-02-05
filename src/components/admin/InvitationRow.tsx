@@ -47,11 +47,6 @@ export default function InvitationRow({ invitation, messageTemplate, onRefresh }
     };
 
     const handleMarkSent = async () => {
-        if (!invitation.phone_e164) {
-            setError('Primero guarda el teléfono');
-            return;
-        }
-
         setLoading(true);
         const baseUrl = window.location.origin;
         const inviteUrl = `${baseUrl}/i/${invitation.invite_token}`;
@@ -62,7 +57,7 @@ export default function InvitationRow({ invitation, messageTemplate, onRefresh }
 
         const { error: rpcError } = await adminMarkInvitationSent(
             invitation.guest_id,
-            invitation.phone_e164,
+            invitation.phone_e164 || 'Copied/Alternative',
             inviteUrl,
             finalMessage
         );
@@ -212,7 +207,7 @@ export default function InvitationRow({ invitation, messageTemplate, onRefresh }
 
                     <button
                         onClick={handleMarkSent}
-                        disabled={loading || !invitation.phone_e164}
+                        disabled={loading}
                         className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${invitation.last_sent_at
                             ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20 hover:bg-blue-500/20'
                             : 'bg-emerald-500 text-slate-950 hover:bg-emerald-400'
