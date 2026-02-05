@@ -14,7 +14,7 @@ interface InvitationsTableProps {
 export default function InvitationsTable({ invitations, onRefresh }: InvitationsTableProps) {
     const [search, setSearch] = useState('');
     const [filterPending, setFilterPending] = useState(false);
-    const [messageTemplate, setMessageTemplate] = useState('¡Hola {NOMBRE}! Dicen que los sueños se hacen realidad y el mío está a punto de cumplirse este 22 de febrero. Mi cuento de hadas no estaría completo sin una persona tan especial para mí como tú. \n\nEntra aquí para ver tu invitación real a mi noche mágica:\n\n{URL}\n\n¡Hagamos que esta noche sea inolvidable!');
+    const [messageTemplate, setMessageTemplate] = useState('¡Hola {NOMBRE}! Dicen que los sueños se hacen realidad y el mío está a punto de cumplirse este 21 de febrero. Mi cuento de hadas no estaría completo sin una persona tan especial para mí como tú. \n\nEntra aquí para ver tu invitación real a mi noche mágica:\n\n{URL}\n\n¡Hagamos que esta noche sea inolvidable!');
     const [showTemplateEditor, setShowTemplateEditor] = useState(false);
 
     const filtered = invitations.filter(inv => {

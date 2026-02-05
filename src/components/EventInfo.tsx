@@ -30,7 +30,7 @@ export default function EventInfo() {
                     </div>
                     <h3 className="font-script text-5xl md:text-6xl text-emerald-800 mb-6 py-2 leading-relaxed drop-shadow-sm">¡Celebremos la vida!</h3>
                     <p className="font-body text-lg text-slate-600 leading-loose">
-                        "Como la esmeralda que simboliza esperanza y renovación, inicio esta nueva etapa. Quiero compartir este brillo contigo, porque cada momento feliz es mejor cuando estamos juntos."
+                        "Como la esmeralda que simboliza esperanza y renovación, inicio esta nueva etapa agradeciendo primeramente a Dios, el autor de toda magia y el creador de mis sueños, por permitirme vivir este momento. Quiero compartir Su bendición contigo, porque cada instante de felicidad es más brillante cuando caminamos de Su mano."
                     </p>
                 </section>
             </ScrollReveal>
