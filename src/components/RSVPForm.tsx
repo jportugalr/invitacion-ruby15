@@ -155,7 +155,7 @@ export default function RSVPForm({ invitation }: RSVPFormProps) {
             // 9. Time
             ctx.fillStyle = "#059669";
             ctx.font = "bold 16px sans-serif";
-            ctx.fillText("Sábado 21 Feb - 9:00 PM (Bienvenida)", width / 2, 715);
+            ctx.fillText("Sábado 21 Feb - 8:00 PM (Bienvenida)", width / 2, 715);
 
             // 10. Footer decoration
             ctx.fillStyle = "#059669";

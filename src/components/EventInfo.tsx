@@ -67,7 +67,7 @@ export default function EventInfo() {
                                     <h4 className="font-script text-4xl text-emerald-800 mb-8 py-2 leading-relaxed text-center">Itinerario Real</h4>
                                     <div className="space-y-8 relative before:absolute before:left-8 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
                                         {[
-                                            { time: '21:00', label: 'Bienvenida', icon: '🍸', color: 'bg-emerald-100' },
+                                            { time: '20:00', label: 'Bienvenida', icon: '🍸', color: 'bg-emerald-100' },
                                             { time: '22:30', label: 'Vals & Cena', icon: '🍽️', color: 'bg-teal-100' },
                                             { time: '23:30', label: '¡Hora Loca!', icon: '💃', color: 'bg-green-100' },
                                             // { time: '02:00', label: 'Fin de Fiesta', icon: '🌙', color: 'bg-slate-200' }
