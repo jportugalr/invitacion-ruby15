@@ -3,7 +3,7 @@
 import { BACKGROUNDS, getBackgroundStyle } from '@/lib/assets';
 import ScrollReveal from './ScrollReveal';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Invitation } from '@/lib/types';
 import { submitRsvp } from '@/lib/rpc';
 import { QRCodeSVG } from 'qrcode.react';
@@ -18,37 +18,82 @@ export default function RSVPForm({ invitation }: RSVPFormProps) {
     const [status, setStatus] = useState<'confirmed' | 'declined' | null>(
         invitation.rsvp_status === 'pending' ? null : invitation.rsvp_status
     );
-    // Logic: If plus_one_allowed is true
-    const plusOneAllowed = invitation.plus_one_allowed;
+
+    // New logic: Use companions_count as the max, fallback to plus_one_allowed for legacy
+    const maxCompanions = invitation.companions_count ?? (invitation.plus_one_allowed ? 1 : 0);
+    const canHaveCompanions = maxCompanions > 0;
 
     // State for form
-    const [attendeesCount, setAttendeesCount] = useState<number>(invitation.attendees_count > 0 ? invitation.attendees_count : 1);
+    const [isAccompanied, setIsAccompanied] = useState(invitation.attendees_count > 1);
+    const [selectedCompanionCount, setSelectedCompanionCount] = useState(
+        invitation.attendees_count > 1 ? invitation.attendees_count - 1 : 1
+    );
     const [companionName, setCompanionName] = useState(invitation.companion_name || '');
     const [notes, setNotes] = useState(invitation.notes || '');
+
+    // Derived attendees count
+    const attendeesCount = useMemo(() => {
+        if (status === 'declined') return 1;
+        if (!isAccompanied) return 1;
+        return 1 + selectedCompanionCount;
+    }, [status, isAccompanied, selectedCompanionCount]);
 
     // UI Logic
     const [loading, setLoading] = useState(false);
     const [rsvpStep, setRsvpStep] = useState(invitation.rsvp_status === 'pending' ? 1 : 2);
     const [error, setError] = useState<string | null>(null);
 
+    // Helper: Normalize companion name string
+    const normalizeCompanionName = (name: string): string => {
+        return name
+            .trim()
+            .replace(/\s+/g, ' ')  // Collapse multiple spaces
+            .replace(/,+/g, ',')   // Collapse multiple commas
+            .replace(/^,|,$/g, '') // Remove leading/trailing commas
+            .trim();
+    };
+
+    // Helper: Count names in companion string
+    const countNames = (name: string): number => {
+        const normalized = normalizeCompanionName(name);
+        if (!normalized) return 0;
+        return normalized.split(',').filter(n => n.trim()).length;
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
         if (!status) return;
 
-        // Validation: If 2 attendees, companion name is required
-        if (status === 'confirmed' && attendeesCount > 1 && !companionName.trim()) {
-            setError('Por favor ingresa el nombre de tu acompañante.');
-            return;
+        // Validation for confirmed status with companions
+        if (status === 'confirmed' && isAccompanied) {
+            const normalizedName = normalizeCompanionName(companionName);
+            if (!normalizedName) {
+                setError('Por favor ingresa el nombre de tu(s) acompañante(s).');
+                return;
+            }
+
+            // If multiple companions selected, require comma-separated names
+            if (selectedCompanionCount > 1) {
+                const namesCount = countNames(companionName);
+                if (namesCount < selectedCompanionCount) {
+                    setError(`Ingresa ${selectedCompanionCount} nombres separados por coma.`);
+                    return;
+                }
+            }
         }
 
         setLoading(true);
+
+        const finalCompanionName = status === 'confirmed' && isAccompanied
+            ? normalizeCompanionName(companionName)
+            : null;
 
         const { error: rpcError } = await submitRsvp(
             invitation.invite_token,
             status,
             status === 'confirmed' ? attendeesCount : 1,
-            status === 'confirmed' && attendeesCount > 1 ? companionName : null,
+            finalCompanionName,
             notes.trim() || null
         );
 
@@ -60,6 +105,8 @@ export default function RSVPForm({ invitation }: RSVPFormProps) {
                 setError('Esta invitación no permite acompañantes adicionales.');
             } else if (rpcError.includes('COMPANION_NAME_REQUIRED')) {
                 setError('El nombre del acompañante es obligatorio.');
+            } else if (rpcError.includes('MAX_COMPANIONS_EXCEEDED')) {
+                setError(`Solo puedes traer hasta ${maxCompanions} acompañante(s).`);
             } else {
                 setError('Ocurrió un error al enviar tu respuesta. Intenta nuevamente.');
             }
@@ -171,6 +218,11 @@ export default function RSVPForm({ invitation }: RSVPFormProps) {
         img.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData)));
     };
 
+    // Generate companion count options array (1 to maxCompanions)
+    const companionOptions = useMemo(() => {
+        return Array.from({ length: maxCompanions }, (_, i) => i + 1);
+    }, [maxCompanions]);
+
     return (
         <>
             {/* --- CTA CONFIRMACIÓN --- */}
@@ -206,7 +258,7 @@ export default function RSVPForm({ invitation }: RSVPFormProps) {
                     {/* Contenedor Confeti */}
                     <div id="confetti-container" className="absolute inset-0 overflow-hidden pointer-events-none z-50"></div>
 
-                    <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl relative overflow-hidden animate-float ring-4 ring-emerald-500/20">
+                    <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl relative overflow-hidden animate-float ring-4 ring-emerald-500/20 max-h-[90vh] overflow-y-auto">
 
                         {/* Cabecera Tipo Ticket */}
                         <div className="bg-emerald-600 p-8 text-center relative overflow-hidden">
@@ -264,6 +316,7 @@ export default function RSVPForm({ invitation }: RSVPFormProps) {
                                                     checked={status === 'declined'}
                                                     onChange={() => {
                                                         setStatus('declined');
+                                                        setIsAccompanied(false);
                                                     }}
                                                 />
                                                 <div className={`w-8 h-8 rounded-full flex items-center justify-center mb-2 transition-colors ${status === 'declined' ? 'bg-slate-500 text-white' : 'bg-slate-200 text-slate-400'}`}>
@@ -277,30 +330,38 @@ export default function RSVPForm({ invitation }: RSVPFormProps) {
                                     {status === 'confirmed' && (
                                         <div className="space-y-6 mb-8 animate-in slide-in-from-top-4 fade-in duration-500">
 
-                                            {/* Selector de Asistentes (+1 Logic) */}
-                                            {plusOneAllowed ? (
+                                            {/* Selector de Asistentes */}
+                                            {canHaveCompanions ? (
                                                 <div className="mb-6">
-                                                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">¿Vienes solo o acompañado?</label>
+                                                    <div className="flex justify-between items-end mb-3">
+                                                        <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider">¿Vienes solo o acompañado?</label>
+                                                        <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100 uppercase tracking-tighter">
+                                                            Hasta {maxCompanions} pases adicionales
+                                                        </span>
+                                                    </div>
                                                     <div className="grid grid-cols-2 gap-4">
                                                         {/* Opción Solo Yo */}
                                                         <div
-                                                            onClick={() => setAttendeesCount(1)}
-                                                            className={`relative overflow-hidden rounded-2xl border-2 p-4 cursor-pointer transition-all duration-300 ${attendeesCount === 1 ? 'border-emerald-500 bg-emerald-50/50 ring-1 ring-emerald-500' : 'border-slate-100 hover:border-slate-300'}`}
+                                                            onClick={() => {
+                                                                setIsAccompanied(false);
+                                                                setCompanionName('');
+                                                            }}
+                                                            className={`relative overflow-hidden rounded-2xl border-2 p-4 cursor-pointer transition-all duration-300 ${!isAccompanied ? 'border-emerald-500 bg-emerald-50/50 ring-1 ring-emerald-500' : 'border-slate-100 hover:border-slate-300'}`}
                                                         >
                                                             <div className="flex flex-col items-center gap-2">
-                                                                <span className={`text-2xl ${attendeesCount === 1 ? 'scale-110' : 'grayscale opacity-50'}`}>👤</span>
-                                                                <span className={`text-xs font-bold uppercase tracking-wider ${attendeesCount === 1 ? 'text-emerald-700' : 'text-slate-500'}`}>Solo Yo</span>
+                                                                <span className={`text-2xl ${!isAccompanied ? 'scale-110' : 'grayscale opacity-50'}`}>👤</span>
+                                                                <span className={`text-xs font-bold uppercase tracking-wider ${!isAccompanied ? 'text-emerald-700' : 'text-slate-500'}`}>Solo Yo</span>
                                                             </div>
                                                         </div>
 
-                                                        {/* Opción +1 */}
+                                                        {/* Opción Acompañado */}
                                                         <div
-                                                            onClick={() => setAttendeesCount(2)}
-                                                            className={`relative overflow-hidden rounded-2xl border-2 p-4 cursor-pointer transition-all duration-300 ${attendeesCount === 2 ? 'border-emerald-500 bg-emerald-50/50 ring-1 ring-emerald-500' : 'border-slate-100 hover:border-slate-300'}`}
+                                                            onClick={() => setIsAccompanied(true)}
+                                                            className={`relative overflow-hidden rounded-2xl border-2 p-4 cursor-pointer transition-all duration-300 ${isAccompanied ? 'border-emerald-500 bg-emerald-50/50 ring-1 ring-emerald-500' : 'border-slate-100 hover:border-slate-300'}`}
                                                         >
                                                             <div className="flex flex-col items-center gap-2">
-                                                                <span className={`text-2xl ${attendeesCount === 2 ? 'scale-110' : 'grayscale opacity-50'}`}>👥</span>
-                                                                <span className={`text-xs font-bold uppercase tracking-wider ${attendeesCount === 2 ? 'text-emerald-700' : 'text-slate-500'}`}>+1 Persona</span>
+                                                                <span className={`text-2xl ${isAccompanied ? 'scale-110' : 'grayscale opacity-50'}`}>👥</span>
+                                                                <span className={`text-xs font-bold uppercase tracking-wider ${isAccompanied ? 'text-emerald-700' : 'text-slate-500'}`}>Acompañado</span>
                                                             </div>
                                                             {/* Badge de Cupo */}
                                                             <div className="absolute top-2 right-2">
@@ -318,18 +379,47 @@ export default function RSVPForm({ invitation }: RSVPFormProps) {
                                                 </div>
                                             )}
 
-                                            {/* Nombre del Acompañante */}
-                                            {attendeesCount > 1 && (
+                                            {/* Selector de cantidad de acompañantes (solo si maxCompanions > 1) */}
+                                            {isAccompanied && maxCompanions > 1 && (
+                                                <div className="animate-in fade-in zoom-in-95 bg-teal-50/50 border border-teal-100 rounded-xl p-4">
+                                                    <label className="block text-xs font-bold text-teal-700 uppercase tracking-wider mb-3">¿Cuántas personas te acompañan?</label>
+                                                    <div className="flex gap-2 flex-wrap">
+                                                        {companionOptions.map((count) => (
+                                                            <button
+                                                                key={count}
+                                                                type="button"
+                                                                onClick={() => setSelectedCompanionCount(count)}
+                                                                className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${selectedCompanionCount === count
+                                                                    ? 'bg-teal-500 text-white shadow-md'
+                                                                    : 'bg-white border border-teal-200 text-teal-600 hover:bg-teal-50'
+                                                                    }`}
+                                                            >
+                                                                +{count} {count === 1 ? 'persona' : 'personas'}
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* Nombre del Acompañante(s) */}
+                                            {isAccompanied && (
                                                 <div className="animate-in fade-in zoom-in-95 bg-emerald-50/50 border border-emerald-100 rounded-xl p-4">
-                                                    <label className="block text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">Nombre de tu Acompañante</label>
+                                                    <label className="block text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">
+                                                        {selectedCompanionCount > 1 ? `Nombres de tus ${selectedCompanionCount} acompañantes` : 'Nombre de tu acompañante'}
+                                                    </label>
                                                     <input
                                                         type="text"
                                                         required
-                                                        placeholder="Nombre y Apellido"
+                                                        placeholder={selectedCompanionCount > 1 ? 'Ej: Ana Pérez, Luis Torres' : 'Nombre y Apellido'}
                                                         value={companionName}
                                                         onChange={(e) => setCompanionName(e.target.value)}
                                                         className="w-full bg-white border border-emerald-200 rounded-lg px-4 py-3 focus:outline-none focus:border-emerald-500 text-sm transition-colors shadow-sm"
                                                     />
+                                                    {selectedCompanionCount > 1 && (
+                                                        <p className="text-[10px] text-emerald-600 mt-2 italic font-medium">
+                                                            ⚠️ Por favor, escribe los {selectedCompanionCount} nombres separados por coma.
+                                                        </p>
+                                                    )}
                                                 </div>
                                             )}
 

@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
   --foreground: #171717;
+}
+
+html,
+body {
+  @apply overflow-x-hidden w-full max-w-[100vw] m-0 p-0;
 }
 
 @theme inline {

@@ -6,6 +6,7 @@ export interface Invitation {
     first_name: string;
     last_name: string;
     plus_one_allowed: boolean;
+    companions_count: number; // Maximum companions allowed (0, 1, 2, 3, etc.)
     rsvp_status: InvitationStatus;
     attendees_count: number;
     companion_name: string | null;

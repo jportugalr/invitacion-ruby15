@@ -46,7 +46,7 @@ export default function Hero({ invitation }: HeroProps) {
                 <div className="absolute top-[-20%] right-[-10%] w-[50%] h-[50%] bg-emerald-200 rounded-full blur-[120px] opacity-60 animate-pulse"></div>
                 <div className="absolute bottom-[-10%] left-[-10%] w-[60%] h-[60%] bg-teal-100 rounded-full blur-[100px] opacity-70"></div>
 
-                <div className="relative z-10 px-4 animate-float">
+                <div className="relative z-10 px-4 w-full max-w-full overflow-hidden flex flex-col items-center animate-float">
                     <ScrollReveal direction="down" distance={30}>
                         <div className="mb-4 inline-block bg-white px-4 py-1 rounded-full shadow-sm border border-emerald-100 transform -rotate-2">
                             <p className="font-body text-slate-500 text-xs tracking-[0.3em] uppercase font-bold">Save the Date</p>
@@ -54,7 +54,7 @@ export default function Hero({ invitation }: HeroProps) {
                     </ScrollReveal>
 
                     <ScrollReveal direction="up" delay={0.2}>
-                        <h1 className="font-display text-7xl md:text-9xl text-emerald-600 mb-0 leading-[0.9] drop-shadow-sm">
+                        <h1 className="font-display text-7xl md:text-9xl text-emerald-600 mb-0 leading-[0.9] drop-shadow-sm break-words max-w-full">
                             <span className="text-slate-800">Ruby</span><br />
                             Zavaleta
                         </h1>
@@ -66,16 +66,16 @@ export default function Hero({ invitation }: HeroProps) {
 
                     <ScrollReveal direction="up" delay={0.6}>
                         {invitation && (
-                            <p className="mt-8 font-body text-slate-600 uppercase tracking-widest text-sm">
-                                Invitado: <span className="font-bold text-emerald-600">{invitation.first_name} {invitation.last_name}</span>
+                            <p className="mt-8 font-body text-slate-600 uppercase tracking-widest text-sm px-2 text-center">
+                                Invitado: <span className="font-bold text-emerald-600 block sm:inline">{invitation.first_name} {invitation.last_name}</span>
                             </p>
                         )}
                     </ScrollReveal>
 
                     {/* Original Date Box */}
                     <ScrollReveal direction="up" delay={0.8}>
-                        <div className="mt-8 bg-white/60 backdrop-blur-sm border border-white p-4 rounded-2xl inline-flex flex-col items-center gap-2 shadow-sm">
-                            <div className="flex items-center gap-4 text-slate-700 font-bold font-body text-sm md:text-base tracking-widest uppercase">
+                        <div className="mt-8 bg-white/60 backdrop-blur-sm border border-white p-4 rounded-2xl inline-flex flex-col items-center gap-2 shadow-sm max-w-[90%]">
+                            <div className="flex items-center gap-4 text-slate-700 font-bold font-body text-sm md:text-base tracking-widest uppercase flex-wrap justify-center">
                                 <span>21 Feb</span>
                                 <span className="text-emerald-500">●</span>
                                 <span>2026</span>
@@ -86,8 +86,8 @@ export default function Hero({ invitation }: HeroProps) {
                     </ScrollReveal>
 
                     {/* Visual Calendar */}
-                    <div className="mt-8 mb-8 relative z-10">
-                        <div className="bg-white/60 backdrop-blur-sm p-6 rounded-2xl shadow-sm border border-emerald-100/50 max-w-xs mx-auto">
+                    <div className="mt-8 mb-8 relative z-10 w-full flex justify-center">
+                        <div className="bg-white/60 backdrop-blur-sm p-6 rounded-2xl shadow-sm border border-emerald-100/50 w-full max-w-xs mx-auto">
                             <h3 className="font-serif text-xl text-emerald-900 uppercase tracking-widest mb-4 border-b border-emerald-100 pb-2">Febrero</h3>
 
                             {/* Días Semana */}
