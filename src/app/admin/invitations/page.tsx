@@ -108,6 +108,49 @@ export default function AdminInvitationsPage() {
                     </button>
                 </div>
 
+                {/* Statistics Cards */}
+                {!error && invitations.length > 0 && (
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+                        {/* Confirmed */}
+                        <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-5">
+                            <p className="text-[10px] text-emerald-400 uppercase tracking-widest font-bold mb-1">Confirmados</p>
+                            <p className="text-4xl font-bold text-emerald-400">
+                                {invitations.filter(i => i.rsvp_status === 'confirmed').length}
+                            </p>
+                            <p className="text-xs text-slate-500 mt-1">invitaciones</p>
+                        </div>
+
+                        {/* Pending */}
+                        <div className="bg-amber-500/10 border border-amber-500/20 rounded-2xl p-5">
+                            <p className="text-[10px] text-amber-400 uppercase tracking-widest font-bold mb-1">Pendientes</p>
+                            <p className="text-4xl font-bold text-amber-400">
+                                {invitations.filter(i => i.rsvp_status === 'pending').length}
+                            </p>
+                            <p className="text-xs text-slate-500 mt-1">sin respuesta</p>
+                        </div>
+
+                        {/* Declined */}
+                        <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-5">
+                            <p className="text-[10px] text-red-400 uppercase tracking-widest font-bold mb-1">Declinaron</p>
+                            <p className="text-4xl font-bold text-red-400">
+                                {invitations.filter(i => i.rsvp_status === 'declined').length}
+                            </p>
+                            <p className="text-xs text-slate-500 mt-1">no asistirán</p>
+                        </div>
+
+                        {/* Total Attendees */}
+                        <div className="bg-sky-500/10 border border-sky-500/20 rounded-2xl p-5">
+                            <p className="text-[10px] text-sky-400 uppercase tracking-widest font-bold mb-1">Asistentes</p>
+                            <p className="text-4xl font-bold text-sky-400">
+                                {invitations
+                                    .filter(i => i.rsvp_status === 'confirmed')
+                                    .reduce((acc, i) => acc + (i.attendees_count || 1), 0)}
+                            </p>
+                            <p className="text-xs text-slate-500 mt-1">personas confirmadas</p>
+                        </div>
+                    </div>
+                )}
+
                 {error ? (
                     <div className="bg-red-500/10 border border-red-500/20 p-10 rounded-3xl text-center">
                         <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
