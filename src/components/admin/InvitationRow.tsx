@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { AdminInvitation } from '@/lib/types';
 import { adminUpdateGuestPhone, adminMarkInvitationSent } from '@/lib/adminRpc';
-import { MessageSquare, Check, Save, Loader2, AlertCircle, Phone, ExternalLink, Copy } from 'lucide-react';
+import { MessageSquare, Check, Save, Loader2, AlertCircle, Phone, ExternalLink, Copy, Users } from 'lucide-react';
 
 interface InvitationRowProps {
     invitation: AdminInvitation;
@@ -121,14 +121,29 @@ export default function InvitationRow({ invitation, messageTemplate, onRefresh }
                             }`}>
                             {invitation.rsvp_status}
                         </span>
-                        {invitation.plus_one_allowed && (
-                            <span className="text-[10px] text-teal-500 font-bold uppercase">+1</span>
+                        {invitation.companions_count > 0 && (
+                            <span className="text-[10px] text-teal-500 font-bold uppercase">+{invitation.companions_count}</span>
                         )}
                     </div>
                     {invitation.rsvp_status === 'confirmed' && (
-                        <span className="text-[10px] text-slate-500">
-                            {invitation.attendees_count} asistentes
-                        </span>
+                        <div className="flex items-center gap-1.5 mt-1.5">
+                            <div className="flex items-center gap-1 bg-emerald-500/20 px-2 py-0.5 rounded-lg border border-emerald-500/30">
+                                <Users size={12} className="text-emerald-400" />
+                                <span className="text-[11px] font-bold text-emerald-300 whitespace-nowrap">
+                                    {invitation.attendees_count} {invitation.attendees_count === 1 ? 'confirmado' : 'confirmados'}
+                                </span>
+                            </div>
+                        </div>
+                    )}
+                    {invitation.rsvp_status === 'pending' && (
+                        <div className="flex items-center gap-1.5 mt-1.5">
+                            <div className="flex items-center gap-1 bg-slate-800 px-2 py-0.5 rounded-lg border border-slate-700">
+                                <Users size={12} className="text-slate-500" />
+                                <span className="text-[11px] font-bold text-slate-400 whitespace-nowrap">
+                                    Cupo: {1 + (invitation.companions_count || 0)}
+                                </span>
+                            </div>
+                        </div>
                     )}
                 </div>
             </td>

@@ -40,6 +40,7 @@ export interface AdminInvitation {
     invite_token: string;
     plus_one_allowed: boolean;
     attendees_count: number;
+    companions_count: number;
     rsvp_status: InvitationStatus;
     phone_e164: string | null;
     last_sent_at: string | null;
